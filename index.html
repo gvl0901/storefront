@@ -81,41 +81,47 @@
   
   /* Fixed column widths for items table */
   #itemsBody tr td:nth-child(1),
-  thead tr th:nth-child(1) { width: 14%; }  /* Batch # */
+  thead tr th:nth-child(1) { width: 10%; }  /* Item */
   
   #itemsBody tr td:nth-child(2),
-  thead tr th:nth-child(2) { width: 16%; }  /* Data Link */
+  thead tr th:nth-child(2) { width: 12%; }  /* Batch # */
   
   #itemsBody tr td:nth-child(3),
-  thead tr th:nth-child(3) { width: 16%; }  /* Item Data */
+  thead tr th:nth-child(3) { width: 14%; }  /* Data Link */
   
   #itemsBody tr td:nth-child(4),
-  thead tr th:nth-child(4) { width: 12%; }  /* Price */
+  thead tr th:nth-child(4) { width: 14%; }  /* Item Data */
   
   #itemsBody tr td:nth-child(5),
-  thead tr th:nth-child(5) { width: 14%; }  /* Qty */
+  thead tr th:nth-child(5) { width: 12%; }  /* Price */
   
   #itemsBody tr td:nth-child(6),
-  thead tr th:nth-child(6) { width: 14%; }  /* Button */
+  thead tr th:nth-child(6) { width: 12%; }  /* Qty */
+  
+  #itemsBody tr td:nth-child(7),
+  thead tr th:nth-child(7) { width: 12%; }  /* Button */
   
   /* Fixed column widths for cart table */
   #cartBody tr td:nth-child(1),
-  #cartTable thead tr th:nth-child(1) { width: 14%; }  /* Batch # */
+  #cartTable thead tr th:nth-child(1) { width: 12%; }  /* Item */
   
   #cartBody tr td:nth-child(2),
-  #cartTable thead tr th:nth-child(2) { width: 20%; }  /* Item Data */
+  #cartTable thead tr th:nth-child(2) { width: 12%; }  /* Batch # */
   
   #cartBody tr td:nth-child(3),
-  #cartTable thead tr th:nth-child(3) { width: 10%; }  /* Qty */
+  #cartTable thead tr th:nth-child(3) { width: 18%; }  /* Item Data */
   
   #cartBody tr td:nth-child(4),
-  #cartTable thead tr th:nth-child(4) { width: 12%; }  /* Price */
+  #cartTable thead tr th:nth-child(4) { width: 10%; }  /* Qty */
   
   #cartBody tr td:nth-child(5),
-  #cartTable thead tr th:nth-child(5) { width: 16%; }  /* Line Total */
+  #cartTable thead tr th:nth-child(5) { width: 12%; }  /* Price */
   
   #cartBody tr td:nth-child(6),
-  #cartTable thead tr th:nth-child(6) { width: 12%; }  /* Remove Button */
+  #cartTable thead tr th:nth-child(6) { width: 14%; }  /* Line Total */
+  
+  #cartBody tr td:nth-child(7),
+  #cartTable thead tr th:nth-child(7) { width: 10%; }  /* Remove Button */
   
   a.datalink{
     color:var(--accent);
@@ -336,6 +342,7 @@
       <table>
         <thead>
           <tr>
+            <th>Item</th>
             <th>Batch #</th>
             <th>Data Link</th>
             <th>Item Data</th>
@@ -357,6 +364,7 @@
       <table id="cartTable" style="display:none;">
         <thead>
           <tr>
+            <th>Item</th>
             <th>Batch #</th>
             <th>Item Data</th>
             <th>Qty</th>
@@ -433,11 +441,11 @@
 
 <script>
   const ITEMS = [
-    { batch:'B-1001', link:'https://example.com/data/b1001', itemData:'500g', price:25.00, name:'Item1' },
-    { batch:'B-1002', link:'https://example.com/data/b1002', itemData:'250ml', price:40.00, name:'Item2' },
-    { batch:'B-1003', link:'https://example.com/data/b1003', itemData:'10 units', price:30.00, name:'Item3' },
-    { batch:'B-1004', link:'https://example.com/data/b1004', itemData:'1kg', price:55.00, name:'Item4' },
-    { batch:'B-1005', link:'https://example.com/data/b1005', itemData:'100 units', price:60.00, name:'Item5' },
+    { batch:'B-1001', link:'https://example.com/data/b1001', itemData:'500g', price:25.00, name:'Item 1' },
+    { batch:'B-1002', link:'https://example.com/data/b1002', itemData:'250ml', price:40.00, name:'Item 2' },
+    { batch:'B-1003', link:'https://example.com/data/b1003', itemData:'10 units', price:30.00, name:'Item 3' },
+    { batch:'B-1004', link:'https://example.com/data/b1004', itemData:'1kg', price:55.00, name:'Item 4' },
+    { batch:'B-1005', link:'https://example.com/data/b1005', itemData:'100 units', price:60.00, name:'Item 5' },
   ];
 
   const SHIPPING_FLAT = 35.00;
@@ -457,6 +465,7 @@
         .map(n => `<option value="${n}">${n}</option>`).join('');
 
       tr.innerHTML = `
+        <td>${item.name}</td>
         <td>${item.batch}</td>
         <td><a class="datalink" href="${item.link}" target="_blank" rel="noopener">View Data</a></td>
         <td>${item.itemData}</td>
@@ -510,6 +519,7 @@
       const tr = document.createElement('tr');
       tr.className = 'cart-row';
       tr.innerHTML = `
+        <td>${c.name}</td>
         <td>${c.batch}</td>
         <td>${c.itemData}</td>
         <td>${c.qty}</td>
