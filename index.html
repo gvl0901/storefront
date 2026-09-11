@@ -5,589 +5,635 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Portal</title>
 <style>
-  :root{
-    --bg:#0f1115;
-    --panel:#171a21;
-    --panel2:#1e222b;
-    --border:#2a2f3a;
-    --text:#e8eaed;
-    --muted:#9aa1ac;
-    --accent:#4f8cff;
-    --accent-hover:#3d76e6;
-    --good:#3ddc84;
-    --danger:#ff6060;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    padding:24px 16px 80px;
-  }
-  h1{
-    text-align:center;
-    font-size:1.6rem;
-    margin-bottom:4px;
-  }
-  .sub{
-    text-align:center;
-    color:var(--muted);
-    margin-bottom:28px;
-    font-size:0.9rem;
-  }
-  .wrap{
-    max-width:1000px;
-    margin:0 auto;
-  }
-  .panel{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:18px;
-    margin-bottom:24px;
-  }
-  .panel h2{
-    margin-top:0;
-    font-size:1.1rem;
-    border-bottom:1px solid var(--border);
-    padding-bottom:10px;
-  }
+  :root{
+    --bg:#0f1115;
+    --panel:#171a21;
+    --panel2:#1e222b;
+    --border:#2a2f3a;
+    --text:#e8eaed;
+    --muted:#9aa1ac;
+    --accent:#4f8cff;
+    --accent-hover:#3d76e6;
+    --good:#3ddc84;
+    --danger:#ff6060;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:24px 16px 80px;
+  }
+  h1{
+    text-align:center;
+    font-size:1.6rem;
+    margin-bottom:4px;
+  }
+  .sub{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:28px;
+    font-size:0.9rem;
+  }
+  .wrap{
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:24px;
+  }
+  .panel h2{
+    margin-top:0;
+    font-size:1.1rem;
+    border-bottom:1px solid var(--border);
+    padding-bottom:10px;
+  }
 
-  /* ---------- Items table ---------- */
-  .table-scroll{overflow-x:auto;}
-  table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:640px;
-  }
-  th,td{
-    padding:10px 8px;
-    text-align:left;
-    border-bottom:1px solid var(--border);
-    font-size:0.88rem;
-    vertical-align:middle;
-  }
-  th{
-    color:var(--muted);
-    font-weight:600;
-    text-transform:uppercase;
-    font-size:0.72rem;
-    letter-spacing:0.05em;
-  }
-  a.datalink{
-    color:var(--accent);
-    text-decoration:none;
-  }
-  a.datalink:hover{text-decoration:underline;}
-  select.qty-select{
-    background:var(--panel2);
-    color:var(--text);
-    border:1px solid var(--border);
-    border-radius:6px;
-    padding:6px 8px;
-    font-size:0.85rem;
-  }
-  button{
-    font-family:inherit;
-    cursor:pointer;
-  }
-  .btn{
-    background:var(--accent);
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    padding:9px 14px;
-    font-size:0.85rem;
-    font-weight:600;
-    transition:background .15s ease;
-  }
-  .btn:hover{background:var(--accent-hover);}
-  .btn.secondary{
-    background:var(--panel2);
-    border:1px solid var(--border);
-    color:var(--text);
-  }
-  .btn.secondary:hover{background:#262b36;}
-  .btn.full{width:100%;}
-  .btn:disabled{opacity:0.5;cursor:not-allowed;}
+  /* ---------- Items table ---------- */
+  .table-scroll{overflow-x:auto;}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:640px;
+    table-layout:fixed;
+  }
+  th,td{
+    padding:12px 10px;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+    font-size:0.88rem;
+    vertical-align:middle;
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+  }
+  th{
+    color:var(--muted);
+    font-weight:600;
+    text-transform:uppercase;
+    font-size:0.72rem;
+    letter-spacing:0.05em;
+  }
+  
+  /* Fixed column widths for items table */
+  #itemsBody tr td:nth-child(1),
+  thead tr th:nth-child(1) { width: 14%; }  /* Batch # */
+  
+  #itemsBody tr td:nth-child(2),
+  thead tr th:nth-child(2) { width: 16%; }  /* Data Link */
+  
+  #itemsBody tr td:nth-child(3),
+  thead tr th:nth-child(3) { width: 16%; }  /* Item Data */
+  
+  #itemsBody tr td:nth-child(4),
+  thead tr th:nth-child(4) { width: 12%; }  /* Price */
+  
+  #itemsBody tr td:nth-child(5),
+  thead tr th:nth-child(5) { width: 14%; }  /* Qty */
+  
+  #itemsBody tr td:nth-child(6),
+  thead tr th:nth-child(6) { width: 14%; }  /* Button */
+  
+  /* Fixed column widths for cart table */
+  #cartBody tr td:nth-child(1),
+  #cartTable thead tr th:nth-child(1) { width: 14%; }  /* Batch # */
+  
+  #cartBody tr td:nth-child(2),
+  #cartTable thead tr th:nth-child(2) { width: 20%; }  /* Item Data */
+  
+  #cartBody tr td:nth-child(3),
+  #cartTable thead tr th:nth-child(3) { width: 10%; }  /* Qty */
+  
+  #cartBody tr td:nth-child(4),
+  #cartTable thead tr th:nth-child(4) { width: 12%; }  /* Price */
+  
+  #cartBody tr td:nth-child(5),
+  #cartTable thead tr th:nth-child(5) { width: 16%; }  /* Line Total */
+  
+  #cartBody tr td:nth-child(6),
+  #cartTable thead tr th:nth-child(6) { width: 12%; }  /* Remove Button */
+  
+  a.datalink{
+    color:var(--accent);
+    text-decoration:none;
+    word-break:break-word;
+  }
+  a.datalink:hover{text-decoration:underline;}
+  select.qty-select{
+    background:var(--panel2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:6px 8px;
+    font-size:0.85rem;
+    width:100%;
+  }
+  button{
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .btn{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:9px 14px;
+    font-size:0.85rem;
+    font-weight:600;
+    transition:background .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{background:var(--accent-hover);}
+  .btn.secondary{
+    background:var(--panel2);
+    border:1px solid var(--border);
+    color:var(--text);
+  }
+  .btn.secondary:hover{background:#262b36;}
+  .btn.full{width:100%;}
+  .btn:disabled{opacity:0.5;cursor:not-allowed;}
 
-  /* ---------- Cart ---------- */
-  #cartEmpty{color:var(--muted);font-size:0.9rem;padding:8px 0;}
-  .cart-row td{font-size:0.88rem;}
-  .remove-btn{
-    background:none;
-    border:1px solid var(--border);
-    color:var(--danger);
-    border-radius:6px;
-    padding:4px 9px;
-    font-size:0.78rem;
-  }
-  .remove-btn:hover{background:#2a1a1a;}
+  /* ---------- Cart ---------- */
+  #cartEmpty{color:var(--muted);font-size:0.9rem;padding:8px 0;}
+  .cart-row td{font-size:0.88rem;}
+  .remove-btn{
+    background:none;
+    border:1px solid var(--border);
+    color:var(--danger);
+    border-radius:6px;
+    padding:4px 9px;
+    font-size:0.78rem;
+    white-space:nowrap;
+  }
+  .remove-btn:hover{background:#2a1a1a;}
 
-  .totals{
-    margin-top:14px;
-    border-top:1px solid var(--border);
-    padding-top:12px;
-  }
-  .totals-row{
-    display:flex;
-    justify-content:space-between;
-    padding:5px 4px;
-    font-size:0.92rem;
-  }
-  .totals-row.total{
-    font-size:1.1rem;
-    font-weight:700;
-    border-top:1px solid var(--border);
-    margin-top:6px;
-    padding-top:10px;
-  }
-  .totals-row .muted{color:var(--muted);}
+  .totals{
+    margin-top:14px;
+    border-top:1px solid var(--border);
+    padding-top:12px;
+  }
+  .totals-row{
+    display:flex;
+    justify-content:space-between;
+    padding:5px 4px;
+    font-size:0.92rem;
+    align-items:center;
+  }
+  .totals-row.total{
+    font-size:1.1rem;
+    font-weight:700;
+    border-top:1px solid var(--border);
+    margin-top:6px;
+    padding-top:10px;
+  }
+  .totals-row .muted{color:var(--muted);}
 
-  /* ---------- Modal ---------- */
-  .overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    align-items:center;
-    justify-content:center;
-    padding:16px;
-    z-index:50;
-  }
-  .overlay.show{display:flex;}
-  .modal{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:14px;
-    max-width:480px;
-    width:100%;
-    max-height:90vh;
-    overflow-y:auto;
-    padding:22px;
-  }
-  .modal h2{
-    margin-top:0;
-    font-size:1.2rem;
-  }
-  .modal-close{
-    float:right;
-    background:none;
-    border:none;
-    color:var(--muted);
-    font-size:1.3rem;
-    line-height:1;
-    cursor:pointer;
-  }
-  .field{
-    margin-bottom:14px;
-  }
-  .field label{
-    display:block;
-    font-size:0.8rem;
-    color:var(--muted);
-    margin-bottom:5px;
-  }
-  .field input, .field textarea{
-    width:100%;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    color:var(--text);
-    border-radius:8px;
-    padding:9px 10px;
-    font-size:0.9rem;
-    font-family:inherit;
-  }
-  .field textarea{
-    resize:vertical;
-    min-height:70px;
-  }
+  /* ---------- Modal ---------- */
+  .overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    z-index:50;
+  }
+  .overlay.show{display:flex;}
+  .modal{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    max-width:480px;
+    width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    padding:22px;
+  }
+  .modal h2{
+    margin-top:0;
+    font-size:1.2rem;
+  }
+  .modal-close{
+    float:right;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:1.3rem;
+    line-height:1;
+    cursor:pointer;
+  }
+  .field{
+    margin-bottom:14px;
+  }
+  .field label{
+    display:block;
+    font-size:0.8rem;
+    color:var(--muted);
+    margin-bottom:5px;
+  }
+  .field input, .field textarea{
+    width:100%;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:9px 10px;
+    font-size:0.9rem;
+    font-family:inherit;
+  }
+  .field textarea{
+    resize:vertical;
+    min-height:70px;
+  }
 
-  .email-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:8px 10px;
-    margin-bottom:16px;
-    font-size:0.88rem;
-    flex-wrap:wrap;
-  }
-  .email-row span{flex:1;word-break:break-all;}
+  .email-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 10px;
+    margin-bottom:16px;
+    font-size:0.88rem;
+    flex-wrap:wrap;
+  }
+  .email-row span{flex:1;word-break:break-all;}
 
-  .pay-options{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    margin-bottom:6px;
-  }
-  .pay-option{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:10px 12px;
-    cursor:pointer;
-    font-size:0.9rem;
-  }
-  .pay-option input{accent-color:var(--accent);width:16px;height:16px;}
-  .pay-note{
-    color:var(--muted);
-    font-size:0.8rem;
-    margin:10px 0 18px;
-  }
+  .pay-options{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:6px;
+  }
+  .pay-option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px 12px;
+    cursor:pointer;
+    font-size:0.9rem;
+  }
+  .pay-option input{accent-color:var(--accent);width:16px;height:16px;}
+  .pay-note{
+    color:var(--muted);
+    font-size:0.8rem;
+    margin:10px 0 18px;
+  }
 
-  .modal-actions{
-    display:flex;
-    gap:10px;
-    margin-top:8px;
-  }
+  .modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:8px;
+  }
 
-  #finalOrderText{
-    width:100%;
-    min-height:220px;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    color:var(--text);
-    border-radius:8px;
-    padding:12px;
-    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-    font-size:0.82rem;
-    white-space:pre;
-    resize:vertical;
-  }
-  .copied-flag{
-    color:var(--good);
-    font-size:0.8rem;
-    margin-left:8px;
-    display:none;
-  }
-  .error-text{
-    color:var(--danger);
-    font-size:0.8rem;
-    margin-top:-6px;
-    margin-bottom:10px;
-    display:none;
-  }
+  #finalOrderText{
+    width:100%;
+    min-height:220px;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:12px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:0.82rem;
+    white-space:pre;
+    resize:vertical;
+  }
+  .copied-flag{
+    color:var(--good);
+    font-size:0.8rem;
+    margin-left:8px;
+    display:none;
+  }
+  .error-text{
+    color:var(--danger);
+    font-size:0.8rem;
+    margin-top:-6px;
+    margin-bottom:10px;
+    display:none;
+  }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <h1>Item Order Portal</h1>
-  <div class="sub">Select quantities and add items to your cart</div>
+  <h1>Item Order Portal</h1>
+  <div class="sub">Select quantities and add items to your cart</div>
 
-  <!-- ITEMS -->
-  <div class="panel">
-    <h2>Available Items</h2>
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>Batch #</th>
-            <th>Data Link</th>
-            <th>Item Data</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="itemsBody"></tbody>
-      </table>
-    </div>
-  </div>
+  <!-- ITEMS -->
+  <div class="panel">
+    <h2>Available Items</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Batch #</th>
+            <th>Data Link</th>
+            <th>Item Data</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="itemsBody"></tbody>
+      </table>
+    </div>
+  </div>
 
-  <!-- CART -->
-  <div class="panel">
-    <h2>Your Cart</h2>
-    <div id="cartEmpty">Your cart is empty. Add items above.</div>
-    <div class="table-scroll">
-      <table id="cartTable" style="display:none;">
-        <thead>
-          <tr>
-            <th>Batch #</th>
-            <th>Item Data</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Line Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="cartBody"></tbody>
-      </table>
-    </div>
+  <!-- CART -->
+  <div class="panel">
+    <h2>Your Cart</h2>
+    <div id="cartEmpty">Your cart is empty. Add items above.</div>
+    <div class="table-scroll">
+      <table id="cartTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>Batch #</th>
+            <th>Item Data</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Line Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="cartBody"></tbody>
+      </table>
+    </div>
 
-    <div class="totals">
-      <div class="totals-row"><span class="muted">Subtotal</span><span id="subtotalVal">$0.00</span></div>
-      <div class="totals-row"><span class="muted">Shipping (flat rate)</span><span id="shippingVal">$35.00</span></div>
-      <div class="totals-row total"><span>Total</span><span id="totalVal">$0.00</span></div>
-    </div>
+    <div class="totals">
+      <div class="totals-row"><span class="muted">Subtotal</span><span id="subtotalVal">$0.00</span></div>
+      <div class="totals-row"><span class="muted">Shipping (flat rate)</span><span id="shippingVal">$35.00</span></div>
+      <div class="totals-row total"><span>Total</span><span id="totalVal">$0.00</span></div>
+    </div>
 
-    <button class="btn full" id="placeOrderBtn" style="margin-top:16px;" disabled>Place Order</button>
-  </div>
+    <button class="btn full" id="placeOrderBtn" style="margin-top:16px;" disabled>Place Order</button>
+  </div>
 </div>
 
 <!-- MODAL 1: Order Info -->
 <div class="overlay" id="orderModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('orderModal')">&times;</button>
-    <h2>Complete Your Order</h2>
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('orderModal')">&times;</button>
+    <h2>Complete Your Order</h2>
 
-    <div class="email-row">
-      <span>Send order to: <strong>email@proton.me</strong></span>
-      <button class="btn secondary" onclick="copyEmail()">Copy</button>
-      <span class="copied-flag" id="emailCopiedFlag">Copied!</span>
-    </div>
+    <div class="email-row">
+      <span>Send order to: <strong>email@proton.me</strong></span>
+      <button class="btn secondary" onclick="copyEmail()">Copy</button>
+      <span class="copied-flag" id="emailCopiedFlag">Copied!</span>
+    </div>
 
-    <div class="field">
-      <label for="custName">Customer Name</label>
-      <input type="text" id="custName" placeholder="Full name">
-    </div>
-    <div class="field">
-      <label for="custAddress">Shipping Address</label>
-      <textarea id="custAddress" placeholder="Street, City, State, ZIP"></textarea>
-    </div>
+    <div class="field">
+      <label for="custName">Customer Name</label>
+      <input type="text" id="custName" placeholder="Full name">
+    </div>
+    <div class="field">
+      <label for="custAddress">Shipping Address</label>
+      <textarea id="custAddress" placeholder="Street, City, State, ZIP"></textarea>
+    </div>
 
-    <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:8px;">Select Payment Option:</label>
-    <div class="pay-options">
-      <label class="pay-option"><input type="radio" name="payOption" value="Payment 1"> Payment 1</label>
-      <label class="pay-option"><input type="radio" name="payOption" value="Payment 2"> Payment 2</label>
-      <label class="pay-option"><input type="radio" name="payOption" value="Payment 3"> Payment 3</label>
-    </div>
-    <div class="pay-note">You will Receive payment information in 12 Hours.</div>
+    <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:8px;">Select Payment Option:</label>
+    <div class="pay-options">
+      <label class="pay-option"><input type="radio" name="payOption" value="Payment 1"> Payment 1</label>
+      <label class="pay-option"><input type="radio" name="payOption" value="Payment 2"> Payment 2</label>
+      <label class="pay-option"><input type="radio" name="payOption" value="Payment 3"> Payment 3</label>
+    </div>
+    <div class="pay-note">You will Receive payment information in 12 Hours.</div>
 
-    <div class="error-text" id="orderFormError">Please fill in your name, address, and select a payment option.</div>
+    <div class="error-text" id="orderFormError">Please fill in your name, address, and select a payment option.</div>
 
-    <div class="modal-actions">
-      <button class="btn secondary" style="flex:1;" onclick="closeModal('orderModal')">Cancel</button>
-      <button class="btn" style="flex:1;" onclick="submitOrderInfo()">Continue</button>
-    </div>
-  </div>
+    <div class="modal-actions">
+      <button class="btn secondary" style="flex:1;" onclick="closeModal('orderModal')">Cancel</button>
+      <button class="btn" style="flex:1;" onclick="submitOrderInfo()">Continue</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL 2: Final Order Block -->
 <div class="overlay" id="finalModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('finalModal')">&times;</button>
-    <h2>Final Order Block</h2>
-    <p style="color:var(--muted);font-size:0.85rem;margin-top:-6px;">Copy the details below and paste them into your email to email@proton.me</p>
-    <textarea id="finalOrderText" readonly></textarea>
-    <div class="modal-actions">
-      <button class="btn full" onclick="copyFinalOrder()">Copy Order Details</button>
-    </div>
-    <span class="copied-flag" id="finalCopiedFlag" style="display:none;margin-top:8px;">Copied to clipboard!</span>
-  </div>
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('finalModal')">&times;</button>
+    <h2>Final Order Block</h2>
+    <p style="color:var(--muted);font-size:0.85rem;margin-top:-6px;">Copy the details below and paste them into your email to email@proton.me</p>
+    <textarea id="finalOrderText" readonly></textarea>
+    <div class="modal-actions">
+      <button class="btn full" onclick="copyFinalOrder()">Copy Order Details</button>
+    </div>
+    <span class="copied-flag" id="finalCopiedFlag" style="display:none;margin-top:8px;">Copied to clipboard!</span>
+  </div>
 </div>
 
 <script>
-  const ITEMS = [
-    { batch:'B-1001', link:'https://example.com/data/b1001', itemData:'500g', price:25.00, name:'Item1' },
-    { batch:'B-1002', link:'https://example.com/data/b1002', itemData:'250ml', price:40.00, name:'Item2' },
-    { batch:'B-1003', link:'https://example.com/data/b1003', itemData:'10 units', price:30.00, name:'Item3' },
-    { batch:'B-1004', link:'https://example.com/data/b1004', itemData:'1kg', price:55.00, name:'Item4' },
-    { batch:'B-1005', link:'https://example.com/data/b1005', itemData:'100 units', price:60.00, name:'Item5' },
-  ];
+  const ITEMS = [
+    { batch:'B-1001', link:'https://example.com/data/b1001', itemData:'500g', price:25.00, name:'Item1' },
+    { batch:'B-1002', link:'https://example.com/data/b1002', itemData:'250ml', price:40.00, name:'Item2' },
+    { batch:'B-1003', link:'https://example.com/data/b1003', itemData:'10 units', price:30.00, name:'Item3' },
+    { batch:'B-1004', link:'https://example.com/data/b1004', itemData:'1kg', price:55.00, name:'Item4' },
+    { batch:'B-1005', link:'https://example.com/data/b1005', itemData:'100 units', price:60.00, name:'Item5' },
+  ];
 
-  const SHIPPING_FLAT = 35.00;
-  let cart = {}; // key: item index -> { qty, ...item }
+  const SHIPPING_FLAT = 35.00;
+  let cart = {}; // key: item index -> { qty, ...item }
 
-  function money(n){
-    return '$' + n.toFixed(2);
-  }
+  function money(n){
+    return '$' + n.toFixed(2);
+  }
 
-  function renderItems(){
-    const tbody = document.getElementById('itemsBody');
-    tbody.innerHTML = '';
-    ITEMS.forEach((item, idx) => {
-      const tr = document.createElement('tr');
+  function renderItems(){
+    const tbody = document.getElementById('itemsBody');
+    tbody.innerHTML = '';
+    ITEMS.forEach((item, idx) => {
+      const tr = document.createElement('tr');
 
-      const qtyOptions = Array.from({length:10}, (_,i)=>i+1)
-        .map(n => `<option value="${n}">${n}</option>`).join('');
+      const qtyOptions = Array.from({length:10}, (_,i)=>i+1)
+        .map(n => `<option value="${n}">${n}</option>`).join('');
 
-      tr.innerHTML = `
-        <td>${item.batch}</td>
-        <td><a class="datalink" href="${item.link}" target="_blank" rel="noopener">View Data</a></td>
-        <td>${item.itemData}</td>
-        <td>${money(item.price)}</td>
-        <td><select class="qty-select" id="qty-${idx}">${qtyOptions}</select></td>
-        <td><button class="btn" onclick="addToCart(${idx})">Add to Cart</button></td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
+      tr.innerHTML = `
+        <td>${item.batch}</td>
+        <td><a class="datalink" href="${item.link}" target="_blank" rel="noopener">View Data</a></td>
+        <td>${item.itemData}</td>
+        <td>${money(item.price)}</td>
+        <td><select class="qty-select" id="qty-${idx}">${qtyOptions}</select></td>
+        <td><button class="btn" onclick="addToCart(${idx})">Add to Cart</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
 
-  function addToCart(idx){
-    const qty = parseInt(document.getElementById('qty-'+idx).value, 10);
-    const item = ITEMS[idx];
-    if(cart[idx]){
-      cart[idx].qty = qty; // update to newly selected qty
-    } else {
-      cart[idx] = { ...item, qty };
-    }
-    renderCart();
-  }
+  function addToCart(idx){
+    const qty = parseInt(document.getElementById('qty-'+idx).value, 10);
+    const item = ITEMS[idx];
+    if(cart[idx]){
+      cart[idx].qty = qty; // update to newly selected qty
+    } else {
+      cart[idx] = { ...item, qty };
+    }
+    renderCart();
+  }
 
-  function removeFromCart(idx){
-    delete cart[idx];
-    renderCart();
-  }
+  function removeFromCart(idx){
+    delete cart[idx];
+    renderCart();
+  }
 
-  function renderCart(){
-    const keys = Object.keys(cart);
-    const cartEmpty = document.getElementById('cartEmpty');
-    const cartTable = document.getElementById('cartTable');
-    const cartBody = document.getElementById('cartBody');
-    const placeOrderBtn = document.getElementById('placeOrderBtn');
+  function renderCart(){
+    const keys = Object.keys(cart);
+    const cartEmpty = document.getElementById('cartEmpty');
+    const cartTable = document.getElementById('cartTable');
+    const cartBody = document.getElementById('cartBody');
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
 
-    if(keys.length === 0){
-      cartEmpty.style.display = 'block';
-      cartTable.style.display = 'none';
-      placeOrderBtn.disabled = true;
-    } else {
-      cartEmpty.style.display = 'none';
-      cartTable.style.display = 'table';
-      placeOrderBtn.disabled = false;
-    }
+    if(keys.length === 0){
+      cartEmpty.style.display = 'block';
+      cartTable.style.display = 'none';
+      placeOrderBtn.disabled = true;
+    } else {
+      cartEmpty.style.display = 'none';
+      cartTable.style.display = 'table';
+      placeOrderBtn.disabled = false;
+    }
 
-    cartBody.innerHTML = '';
-    let subtotal = 0;
-    keys.forEach(idx => {
-      const c = cart[idx];
-      const lineTotal = c.qty * c.price;
-      subtotal += lineTotal;
-      const tr = document.createElement('tr');
-      tr.className = 'cart-row';
-      tr.innerHTML = `
-        <td>${c.batch}</td>
-        <td>${c.itemData}</td>
-        <td>${c.qty}</td>
-        <td>${money(c.price)}</td>
-        <td>${money(lineTotal)}</td>
-        <td><button class="remove-btn" onclick="removeFromCart(${idx})">Remove</button></td>
-      `;
-      cartBody.appendChild(tr);
-    });
+    cartBody.innerHTML = '';
+    let subtotal = 0;
+    keys.forEach(idx => {
+      const c = cart[idx];
+      const lineTotal = c.qty * c.price;
+      subtotal += lineTotal;
+      const tr = document.createElement('tr');
+      tr.className = 'cart-row';
+      tr.innerHTML = `
+        <td>${c.batch}</td>
+        <td>${c.itemData}</td>
+        <td>${c.qty}</td>
+        <td>${money(c.price)}</td>
+        <td>${money(lineTotal)}</td>
+        <td><button class="remove-btn" onclick="removeFromCart(${idx})">Remove</button></td>
+      `;
+      cartBody.appendChild(tr);
+    });
 
-    const shipping = keys.length > 0 ? SHIPPING_FLAT : 0;
-    const total = subtotal + shipping;
+    const shipping = keys.length > 0 ? SHIPPING_FLAT : 0;
+    const total = subtotal + shipping;
 
-    document.getElementById('subtotalVal').textContent = money(subtotal);
-    document.getElementById('shippingVal').textContent = money(shipping);
-    document.getElementById('totalVal').textContent = money(total);
-  }
+    document.getElementById('subtotalVal').textContent = money(subtotal);
+    document.getElementById('shippingVal').textContent = money(shipping);
+    document.getElementById('totalVal').textContent = money(total);
+  }
 
-  function openModal(id){
-    document.getElementById(id).classList.add('show');
-  }
-  function closeModal(id){
-    document.getElementById(id).classList.remove('show');
-  }
+  function openModal(id){
+    document.getElementById(id).classList.add('show');
+  }
+  function closeModal(id){
+    document.getElementById(id).classList.remove('show');
+  }
 
-  document.getElementById('placeOrderBtn').addEventListener('click', () => {
-    openModal('orderModal');
-  });
+  document.getElementById('placeOrderBtn').addEventListener('click', () => {
+    openModal('orderModal');
+  });
 
-  function copyEmail(){
-    const text = 'email@proton.me';
-    copyToClipboard(text, 'emailCopiedFlag');
-  }
+  function copyEmail(){
+    const text = 'email@proton.me';
+    copyToClipboard(text, 'emailCopiedFlag');
+  }
 
-  function copyToClipboard(text, flagId){
-    const done = () => {
-      if(flagId){
-        const flag = document.getElementById(flagId);
-        flag.style.display = 'inline';
-        setTimeout(()=>{ flag.style.display = 'none'; }, 1800);
-      }
-    };
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text, done));
-    } else {
-      fallbackCopy(text, done);
-    }
-  }
+  function copyToClipboard(text, flagId){
+    const done = () => {
+      if(flagId){
+        const flag = document.getElementById(flagId);
+        flag.style.display = 'inline';
+        setTimeout(()=>{ flag.style.display = 'none'; }, 1800);
+      }
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text, done));
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
 
-  function fallbackCopy(text, cb){
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try{ document.execCommand('copy'); }catch(e){}
-    document.body.removeChild(ta);
-    if(cb) cb();
-  }
+  function fallbackCopy(text, cb){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+    if(cb) cb();
+  }
 
-  let orderCounter = Math.floor(4100 + Math.random()*300);
+  let orderCounter = Math.floor(4100 + Math.random()*300);
 
-  function submitOrderInfo(){
-    const name = document.getElementById('custName').value.trim();
-    const address = document.getElementById('custAddress').value.trim();
-    const payEl = document.querySelector('input[name="payOption"]:checked');
-    const errorEl = document.getElementById('orderFormError');
+  function submitOrderInfo(){
+    const name = document.getElementById('custName').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+    const payEl = document.querySelector('input[name="payOption"]:checked');
+    const errorEl = document.getElementById('orderFormError');
 
-    if(!name || !address || !payEl){
-      errorEl.style.display = 'block';
-      return;
-    }
-    errorEl.style.display = 'none';
+    if(!name || !address || !payEl){
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
 
-    const payment = payEl.value;
-    generateFinalOrder(name, address, payment);
-    closeModal('orderModal');
-    openModal('finalModal');
-  }
+    const payment = payEl.value;
+    generateFinalOrder(name, address, payment);
+    closeModal('orderModal');
+    openModal('finalModal');
+  }
 
-  function generateFinalOrder(name, address, payment){
-    const keys = Object.keys(cart);
-    let subtotal = 0;
-    let itemLines = '';
-    keys.forEach(idx => {
-      const c = cart[idx];
-      const lineTotal = c.qty * c.price;
-      subtotal += lineTotal;
-      itemLines += `${c.qty}x ${c.name} (${c.itemData}) [${c.batch}] : ${money(lineTotal)}\n`;
-    });
-    const shipping = keys.length > 0 ? SHIPPING_FLAT : 0;
-    const total = subtotal + shipping;
+  function generateFinalOrder(name, address, payment){
+    const keys = Object.keys(cart);
+    let subtotal = 0;
+    let itemLines = '';
+    keys.forEach(idx => {
+      const c = cart[idx];
+      const lineTotal = c.qty * c.price;
+      subtotal += lineTotal;
+      itemLines += `${c.qty}x ${c.name} (${c.itemData}) [${c.batch}] : ${money(lineTotal)}\n`;
+    });
+    const shipping = keys.length > 0 ? SHIPPING_FLAT : 0;
+    const total = subtotal + shipping;
 
-    const orderNum = orderCounter++;
+    const orderNum = orderCounter++;
 
-    const text =
+    const text =
 `Order #${orderNum}
 Items:
 ${itemLines}
-Subtotal: ${money(subtotal)}  Shipping: ${money(shipping)}  Total: ${money(total)}
+Subtotal: ${money(subtotal)}  Shipping: ${money(shipping)}  Total: ${money(total)}
 Payment: ${payment}
-Shipping Info: Name: ${name}  Address: ${address}`;
+Shipping Info: Name: ${name}  Address: ${address}`;
 
-    document.getElementById('finalOrderText').value = text;
-  }
+    document.getElementById('finalOrderText').value = text;
+  }
 
-  function copyFinalOrder(){
-    const text = document.getElementById('finalOrderText').value;
-    copyToClipboard(text, 'finalCopiedFlag');
-  }
+  function copyFinalOrder(){
+    const text = document.getElementById('finalOrderText').value;
+    copyToClipboard(text, 'finalCopiedFlag');
+  }
 
-  // Close modal when clicking outside the modal box
-  document.querySelectorAll('.overlay').forEach(overlay => {
-    overlay.addEventListener('click', (e) => {
-      if(e.target === overlay){
-        overlay.classList.remove('show');
-      }
-    });
-  });
+  // Close modal when clicking outside the modal box
+  document.querySelectorAll('.overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if(e.target === overlay){
+        overlay.classList.remove('show');
+      }
+    });
+  });
 
-  renderItems();
-  renderCart();
+  renderItems();
+  renderCart();
 </script>
 
 </body>
 </html>
-
