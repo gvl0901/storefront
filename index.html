@@ -80,26 +80,23 @@
   
   /* Fixed column widths for items table */
   #itemsBody tr td:nth-child(1),
-  thead tr th:nth-child(1) { width: 28%; }  /* Item */
+  thead tr th:nth-child(1) { width: 38%; }  /* Item */
   
   #itemsBody tr td:nth-child(2),
   thead tr th:nth-child(2) { width: 22%; }  /* Item Data */
   
   #itemsBody tr td:nth-child(3),
-  thead tr th:nth-child(3) { width: 16%; }  /* Price */
+  thead tr th:nth-child(3) { width: 18%; }  /* Price */
   
   #itemsBody tr td:nth-child(4),
-  thead tr th:nth-child(4) { width: 16%; }  /* Qty */
-  
-  #itemsBody tr td:nth-child(5),
-  thead tr th:nth-child(5) { width: 18%; }  /* Button */
+  thead tr th:nth-child(4) { width: 22%; }  /* Qty */
   
   /* Fixed column widths for cart table */
   #cartBody tr td:nth-child(1),
-  #cartTable thead tr th:nth-child(1) { width: 28%; }  /* Item */
+  #cartTable thead tr th:nth-child(1) { width: 32%; }  /* Item */
   
   #cartBody tr td:nth-child(2),
-  #cartTable thead tr th:nth-child(2) { width: 22%; }  /* Item Data */
+  #cartTable thead tr th:nth-child(2) { width: 20%; }  /* Item Data */
   
   #cartBody tr td:nth-child(3),
   #cartTable thead tr th:nth-child(3) { width: 12%; }  /* Qty */
@@ -111,7 +108,7 @@
   #cartTable thead tr th:nth-child(5) { width: 16%; }  /* Line Total */
   
   #cartBody tr td:nth-child(6),
-  #cartTable thead tr th:nth-child(6) { width: 10%; }  /* Remove Button */
+  #cartTable thead tr th:nth-child(6) { width: 12%; }  /* Remove Button */
   
   .item-name{
     font-weight:600;
@@ -345,7 +342,6 @@
             <th>Item Data</th>
             <th>Price</th>
             <th>Qty</th>
-            <th></th>
           </tr>
         </thead>
         <tbody id="itemsBody"></tbody>
@@ -467,20 +463,23 @@
         </td>
         <td>${item.itemData}</td>
         <td>${money(item.price)}</td>
-        <td><select class="qty-select" id="qty-${idx}">${qtyOptions}</select></td>
-        <td><button class="btn" onclick="addToCart(${idx})">Add</button></td>
+        <td><select class="qty-select" id="qty-${idx}" onchange="updateQty(${idx})">${qtyOptions}</select></td>
       `;
       tbody.appendChild(tr);
     });
   }
 
-  function addToCart(idx){
+  function updateQty(idx){
     const qty = parseInt(document.getElementById('qty-'+idx).value, 10);
     const item = ITEMS[idx];
-    if(cart[idx]){
-      cart[idx].qty = qty; // update to newly selected qty
+    if(qty > 0){
+      if(cart[idx]){
+        cart[idx].qty = qty;
+      } else {
+        cart[idx] = { ...item, qty };
+      }
     } else {
-      cart[idx] = { ...item, qty };
+      delete cart[idx];
     }
     renderCart();
   }
